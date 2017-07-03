@@ -1,0 +1,33 @@
+syntax = "proto2";
+
+//
+// 定义protobuf消息
+//
+
+message WeaponProto  {
+    optional uint32 type = 1;
+    optional string name = 2;
+}
+
+message PlayerProto {
+    // Scalar: 1 vs N
+    optional uint32 id = 1;
+    optional string name = 2;
+    repeated uint32 quests = 3;
+
+    // Nested: 1 vs N
+    optional WeaponProto weapon = 4;
+    repeated WeaponProto weapons = 5;
+
+    // STL
+    optional bytes weapons_map = 6;
+}
+
+message PlayerProto4Table {
+    optional uint32 id = 1;
+    optional bytes name = 2;
+    optional uint32 age = 3;
+
+    optional bytes  weaon = 4;
+    optional bytes  weapns = 5;
+}

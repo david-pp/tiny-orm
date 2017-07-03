@@ -1,0 +1,55 @@
+syntax = "proto2";
+
+//
+// 顺序存储数据格式
+//
+message ArchiveProto {
+    repeated ArchiveMemberProto members = 1;
+}
+
+message ArchiveMemberProto  {
+    optional bytes data = 1;
+}
+
+
+//
+// 整数对应的数据格式
+//
+message IntegerProto {
+    optional uint64 value = 1;
+}
+
+//
+// 浮点数对应的数据格式
+//
+message FloatProto {
+    optional double value = 1;
+}
+
+//
+// 字符串对应的数据格式
+//
+message StringProto {
+    optional string value = 1;
+}
+
+
+//
+// 序列容器对应的数据格式
+//
+message SequenceProto {
+    repeated ArchiveMemberProto values = 1;
+}
+
+//
+// 关联性容器对应的数据格式
+//
+message AssociateProto {
+    message ValueType {
+        optional ArchiveMemberProto key   = 1;
+        optional ArchiveMemberProto value = 2;
+    }
+
+    repeated ValueType values = 1;
+}
+
