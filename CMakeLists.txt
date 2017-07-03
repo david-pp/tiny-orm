@@ -80,4 +80,15 @@ install(FILES
         include/tinyworld.h
         include/archive.pb.h
         include/archive.pb.cc
+        include/pool.h
+        include/pool_sharding.h
+        include/hashkit.h
+        include/tinydb.h
+        include/tinylogger.h
+        include/tinymysql.h
+        include/tinyorm.h
+        include/tinyorm_mysql.h
+        include/tinyorm_mysql.in.h
+        include/tinyorm_soci.h
+        include/tinyorm_soci.in.h
         DESTINATION include/tinyworld)
