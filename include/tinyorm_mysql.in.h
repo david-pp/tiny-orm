@@ -1,7 +1,7 @@
 #ifndef TINYWORLD_TINYORM_MYSQL_IN_H
 #define TINYWORLD_TINYORM_MYSQL_IN_H
 
-bool TinyMySqlORM::showTables(std::unordered_set<std::string> &tables) {
+inline bool TinyMySqlORM::showTables(std::unordered_set<std::string> &tables) {
 
     try {
         mysqlpp::Query query = mysql_->query();
@@ -27,7 +27,7 @@ bool TinyMySqlORM::showTables(std::unordered_set<std::string> &tables) {
     return true;
 }
 
-bool TinyMySqlORM::updateTables() {
+inline bool TinyMySqlORM::updateTables() {
 
     std::unordered_set<std::string> tables;
     if (!showTables(tables))
@@ -47,7 +47,7 @@ bool TinyMySqlORM::updateTables() {
 }
 
 template<typename T>
-bool TinyMySqlORM::createTableByType() {
+inline bool TinyMySqlORM::createTableByType() {
     auto td = TableFactory::instance().tableByType<T>();
     if (!td) {
         LOG_ERROR("TinyMySqlORM", "%s: Table descriptor is not exist", __PRETTY_FUNCTION__);
@@ -57,7 +57,7 @@ bool TinyMySqlORM::createTableByType() {
     return createTable(td);
 }
 
-bool TinyMySqlORM::createTableByName(const std::string &name) {
+inline bool TinyMySqlORM::createTableByName(const std::string &name) {
     auto td = TableFactory::instance().tableByName(name);
     if (!td) {
         LOG_ERROR("TinyMySqlORM", "%s: Table descriptor is not exist", __PRETTY_FUNCTION__);
@@ -69,7 +69,7 @@ bool TinyMySqlORM::createTableByName(const std::string &name) {
 
 
 template<typename T>
-bool TinyMySqlORM::dropTableByType() {
+inline bool TinyMySqlORM::dropTableByType() {
     auto td = TableFactory::instance().tableByType<T>();
     if (!td) {
         LOG_ERROR("TinyMySqlORM", "%s: Table descriptor is not exist", __PRETTY_FUNCTION__);
@@ -79,7 +79,7 @@ bool TinyMySqlORM::dropTableByType() {
     return dropTable(td);
 }
 
-bool TinyMySqlORM::dropTableByName(const std::string &name) {
+inline bool TinyMySqlORM::dropTableByName(const std::string &name) {
     auto td = TableFactory::instance().tableByName(name);
     if (!td) {
         LOG_ERROR("TinyMySqlORM", "%s: Table descriptor is not exist", __PRETTY_FUNCTION__);
@@ -91,7 +91,7 @@ bool TinyMySqlORM::dropTableByName(const std::string &name) {
 
 
 template<typename T>
-bool TinyMySqlORM::updateTableByType() {
+inline bool TinyMySqlORM::updateTableByType() {
     auto td = TableFactory::instance().tableByType<T>();
     if (!td) {
         LOG_ERROR("TinyMySqlORM", "%s: Table descriptor is not exist", __PRETTY_FUNCTION__);
@@ -101,7 +101,7 @@ bool TinyMySqlORM::updateTableByType() {
     return updateTable(td);
 }
 
-bool TinyMySqlORM::updateTableByName(const std::string &name) {
+inline bool TinyMySqlORM::updateTableByName(const std::string &name) {
     auto td = TableFactory::instance().tableByName(name);
     if (!td) {
         LOG_ERROR("TinyMySqlORM", "%s: Table descriptor is not exist", __PRETTY_FUNCTION__);
@@ -111,7 +111,7 @@ bool TinyMySqlORM::updateTableByName(const std::string &name) {
     return updateTable(td.get());
 }
 
-bool TinyMySqlORM::updateExistTable(TableDescriptorBase* td) {
+inline bool TinyMySqlORM::updateExistTable(TableDescriptorBase* td) {
     try {
         mysqlpp::Query query = mysql_->query();
         query << "DESC `" << td->table << "`";
@@ -146,7 +146,7 @@ bool TinyMySqlORM::updateExistTable(TableDescriptorBase* td) {
     }
 }
 
-bool TinyMySqlORM::createTable(TableDescriptorBase* td) {
+inline bool TinyMySqlORM::createTable(TableDescriptorBase* td) {
     if (!td) return false;
 
     try {
@@ -167,7 +167,7 @@ bool TinyMySqlORM::createTable(TableDescriptorBase* td) {
     return false;
 }
 
-bool TinyMySqlORM::dropTable(TableDescriptorBase* td) {
+inline bool TinyMySqlORM::dropTable(TableDescriptorBase* td) {
     if (!td) return false;
 
     try {
@@ -188,7 +188,7 @@ bool TinyMySqlORM::dropTable(TableDescriptorBase* td) {
     return false;
 }
 
-bool TinyMySqlORM::updateTable(TableDescriptorBase* td) {
+inline bool TinyMySqlORM::updateTable(TableDescriptorBase* td) {
     if (!td) return false;
 
     try {
@@ -213,7 +213,7 @@ bool TinyMySqlORM::updateTable(TableDescriptorBase* td) {
 }
 
 template<typename T>
-bool TinyMySqlORM::select(T &obj) {
+inline bool TinyMySqlORM::select(T &obj) {
 
     auto td = TableFactory::instance().tableByType<T>();
     if (!td) {
@@ -244,7 +244,7 @@ bool TinyMySqlORM::select(T &obj) {
 }
 
 template<typename T>
-bool TinyMySqlORM::insert(T &obj) {
+inline bool TinyMySqlORM::insert(T &obj) {
 
     auto td = TableFactory::instance().tableByType<T>();
     if (!td) {
@@ -271,7 +271,7 @@ bool TinyMySqlORM::insert(T &obj) {
 
 
 template<typename T>
-bool TinyMySqlORM::replace(T &obj) {
+inline bool TinyMySqlORM::replace(T &obj) {
 
     auto td = TableFactory::instance().tableByType<T>();
     if (!td) {
@@ -297,7 +297,7 @@ bool TinyMySqlORM::replace(T &obj) {
 }
 
 template<typename T>
-bool TinyMySqlORM::update(T &obj) {
+inline bool TinyMySqlORM::update(T &obj) {
 
     auto td = TableFactory::instance().tableByType<T>();
     if (!td) {
@@ -323,7 +323,7 @@ bool TinyMySqlORM::update(T &obj) {
 }
 
 template<typename T>
-bool TinyMySqlORM::del(T &obj) {
+inline bool TinyMySqlORM::del(T &obj) {
     auto td = TableFactory::instance().tableByType<T>();
     if (!td) {
         LOG_ERROR("TinyMySqlORM", "%s: Table descriptor is not exist", __PRETTY_FUNCTION__);
@@ -348,7 +348,7 @@ bool TinyMySqlORM::del(T &obj) {
 }
 
 template<typename T>
-bool
+inline bool
 TinyMySqlORM::vloadFromDB(const std::function<void(std::shared_ptr<T>)> &callback, const char *clause, va_list ap) {
     auto td = TableFactory::instance().tableByType<T>();
     if (!td) {
@@ -389,7 +389,7 @@ TinyMySqlORM::vloadFromDB(const std::function<void(std::shared_ptr<T>)> &callbac
 }
 
 template<typename T>
-bool TinyMySqlORM::loadFromDB(const std::function<void(std::shared_ptr<T>)> &callback, const char *clause, ...) {
+inline bool TinyMySqlORM::loadFromDB(const std::function<void(std::shared_ptr<T>)> &callback, const char *clause, ...) {
     va_list ap;
     va_start(ap, clause);
     bool ret = vloadFromDB<T>(callback, clause, ap);
@@ -399,7 +399,7 @@ bool TinyMySqlORM::loadFromDB(const std::function<void(std::shared_ptr<T>)> &cal
 }
 
 template<typename T>
-bool TinyMySqlORM::loadFromDB(Records <T> &records, const char *clause, ...) {
+inline bool TinyMySqlORM::loadFromDB(Records <T> &records, const char *clause, ...) {
 
     va_list ap;
     va_start(ap, clause);
@@ -413,7 +413,7 @@ bool TinyMySqlORM::loadFromDB(Records <T> &records, const char *clause, ...) {
 }
 
 template<typename T, typename TSet>
-bool TinyMySqlORM::loadFromDB(TSet &records, const char *clause, ...) {
+inline bool TinyMySqlORM::loadFromDB(TSet &records, const char *clause, ...) {
     va_list ap;
     va_start(ap, clause);
 
@@ -426,7 +426,7 @@ bool TinyMySqlORM::loadFromDB(TSet &records, const char *clause, ...) {
 };
 
 template<typename T, typename TMultiIndexSet>
-bool TinyMySqlORM::loadFromDB2MultiIndexSet(TMultiIndexSet &records, const char *clause, ...) {
+inline bool TinyMySqlORM::loadFromDB2MultiIndexSet(TMultiIndexSet &records, const char *clause, ...) {
     va_list ap;
     va_start(ap, clause);
 
@@ -440,7 +440,7 @@ bool TinyMySqlORM::loadFromDB2MultiIndexSet(TMultiIndexSet &records, const char 
 
 
 template<typename T>
-bool TinyMySqlORM::deleteFromDB(const char *where, ...) {
+inline bool TinyMySqlORM::deleteFromDB(const char *where, ...) {
     auto td = TableFactory::instance().tableByType<T>();
     if (!td) {
         LOG_ERROR("TinyMySqlORM", "%s: Table descriptor is not exist", __PRETTY_FUNCTION__);
@@ -477,7 +477,7 @@ bool TinyMySqlORM::deleteFromDB(const char *where, ...) {
 
 
 template<typename T>
-void
+inline void
 TinyMySqlORM::makeValueList(mysqlpp::Query &query, T &obj, TableDescriptor<T> *td, const FieldDescriptorList &fdlist) {
     if (!td) return;
 
@@ -492,7 +492,7 @@ TinyMySqlORM::makeValueList(mysqlpp::Query &query, T &obj, TableDescriptor<T> *t
 }
 
 template<typename T>
-void
+inline void
 TinyMySqlORM::makeKeyValueList(mysqlpp::Query &query, T &obj, TableDescriptor<T> *td, const FieldDescriptorList &fdlist,
                                const std::string &seperator) {
 
@@ -509,7 +509,7 @@ TinyMySqlORM::makeKeyValueList(mysqlpp::Query &query, T &obj, TableDescriptor<T>
 
 
 template<typename T>
-bool TinyMySqlORM::fieldToQuery(mysqlpp::Query &query, T &obj, TableDescriptor<T> *td, FieldDescriptor::Ptr fd) {
+inline bool TinyMySqlORM::fieldToQuery(mysqlpp::Query &query, T &obj, TableDescriptor<T> *td, FieldDescriptor::Ptr fd) {
     if (!td || !fd) return false;
 
     switch (fd->type) {
@@ -603,7 +603,7 @@ bool TinyMySqlORM::fieldToQuery(mysqlpp::Query &query, T &obj, TableDescriptor<T
 }
 
 template<typename T>
-bool TinyMySqlORM::recordToObject(mysqlpp::Row &record, T &obj, TableDescriptor<T> *td) {
+inline bool TinyMySqlORM::recordToObject(mysqlpp::Row &record, T &obj, TableDescriptor<T> *td) {
     if (!td || record.size() < td->fields().size())
         return false;
 
@@ -714,7 +714,7 @@ bool TinyMySqlORM::recordToObject(mysqlpp::Row &record, T &obj, TableDescriptor<
 
 
 template<typename T>
-bool TinyMySqlORM::makeSelectQuery(mysqlpp::Query &query, const T &obj, TableDescriptor<T> *td) {
+inline bool TinyMySqlORM::makeSelectQuery(mysqlpp::Query &query, const T &obj, TableDescriptor<T> *td) {
     if (!td) td = TableFactory::instance().tableByType<T>();
     if (!td) return false;
 
@@ -726,7 +726,7 @@ bool TinyMySqlORM::makeSelectQuery(mysqlpp::Query &query, const T &obj, TableDes
 }
 
 template<typename T>
-bool TinyMySqlORM::makeInsertQuery(mysqlpp::Query &query, const T &obj, TableDescriptor<T> *td) {
+inline bool TinyMySqlORM::makeInsertQuery(mysqlpp::Query &query, const T &obj, TableDescriptor<T> *td) {
     if (!td) td = TableFactory::instance().tableByType<T>();
     if (!td) return false;
 
@@ -741,7 +741,7 @@ bool TinyMySqlORM::makeInsertQuery(mysqlpp::Query &query, const T &obj, TableDes
 
 
 template<typename T>
-bool TinyMySqlORM::makeReplaceQuery(mysqlpp::Query &query, const T &obj, TableDescriptor<T> *td) {
+inline bool TinyMySqlORM::makeReplaceQuery(mysqlpp::Query &query, const T &obj, TableDescriptor<T> *td) {
     if (!td) td = TableFactory::instance().tableByType<T>();
     if (!td) return false;
 
@@ -755,7 +755,7 @@ bool TinyMySqlORM::makeReplaceQuery(mysqlpp::Query &query, const T &obj, TableDe
 }
 
 template<typename T>
-bool TinyMySqlORM::makeUpdateQuery(mysqlpp::Query &query, const T &obj, TableDescriptor<T> *td) {
+inline bool TinyMySqlORM::makeUpdateQuery(mysqlpp::Query &query, const T &obj, TableDescriptor<T> *td) {
     if (!td) td = TableFactory::instance().tableByType<T>();
     if (!td) return false;
 
@@ -769,7 +769,7 @@ bool TinyMySqlORM::makeUpdateQuery(mysqlpp::Query &query, const T &obj, TableDes
 
 
 template<typename T>
-bool TinyMySqlORM::makeDeleteQuery(mysqlpp::Query &query, const T &obj, TableDescriptor<T> *td) {
+inline bool TinyMySqlORM::makeDeleteQuery(mysqlpp::Query &query, const T &obj, TableDescriptor<T> *td) {
     if (!td) td = TableFactory::instance().tableByType<T>();
     if (!td) return false;
 

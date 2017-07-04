@@ -14,7 +14,7 @@ MySqlConnection::MySqlConnection(const std::string &url) {
 }
 
 bool MySqlConnection::connectByURL(const std::string &urltext) {
-    URL url;
+    TinyURL url;
     if (!url.parse(urltext)) {
         LOG_ERROR("mysql", "connect %s failed: address is invalid", urltext.c_str());
         return false;
@@ -51,7 +51,7 @@ MySqlConnectionPool::MySqlConnectionPool() {
 
 void MySqlConnectionPool::setServerAddress(const std::string &urltext) {
     url_ = urltext;
-    URL url;
+    TinyURL url;
     if (url.parse(urltext)) {
         if (url.query["shard"].size() > 0) {
             shard_ = atol(url.query["shard"].c_str());

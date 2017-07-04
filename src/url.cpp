@@ -329,7 +329,7 @@ void url_field_print(url_field_t *url)
 
 /////////////////////////////////////////////////////
 
-void URL::reset()
+void TinyURL::reset()
 {
 	schema = "";
 	username = "";
@@ -341,7 +341,7 @@ void URL::reset()
 	query.clear();
 }
 
-bool URL::parse(const std::string& urltext)
+bool TinyURL::parse(const std::string& urltext)
 {
 	reset();
 
@@ -373,7 +373,7 @@ bool URL::parse(const std::string& urltext)
 	return false;
 }
 
-std::string URL::make()
+std::string TinyURL::make()
 {
 	// schema://username:password@host:port/path?key=value#fragment
 	std::ostringstream oss;
@@ -417,14 +417,14 @@ int main(int argc, const char* argv[])
 
 	   for (int i = 0; str[i]; i++)
 	   {
-		   	URL url;
+		   	TinyURL url;
 			if (url.parse(str[i]))
 				std::cout << url.make() << std::endl;
 	   }
 		return 1;
 	}
 
-	URL url;
+	TinyURL url;
 	if (url.parse(argv[1]))
 	{
 		std::cout << url.make() << std::endl;

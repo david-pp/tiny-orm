@@ -2,10 +2,12 @@
 #define TINYWORLD_TINYORM_MYSQL_H
 
 #include <vector>
+#include <cstdarg>
 #include <unordered_set>
 #include <functional>
 #include "tinyorm.h"
 #include "tinymysql.h"
+#include "tinylogger.h"
 
 class TinyMySqlORM {
 public:
@@ -167,7 +169,7 @@ private:
 
 #include "tinyorm_mysql.in.h"
 
-using TinyORM = TinyMySqlORM;
+typedef TinyMySqlORM TinyORM;
 
 template <typename T>
 using Object2DB = Object2DB_T<T, TinyMySqlORM>;

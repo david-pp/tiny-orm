@@ -20,12 +20,12 @@
  *
  */
 
-struct URL
+struct TinyURL
 {
 public:
 	typedef std::map<std::string, std::string> QueryMap;
 
-	URL() { reset(); }
+	TinyURL() { reset(); }
 	void reset();
 	bool parse(const std::string& url);
 	std::string make();

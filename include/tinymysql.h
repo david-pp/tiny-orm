@@ -14,7 +14,7 @@ public:
     virtual ~MySqlConnection() {}
 
     //
-    // URL Format:
+    // TinyURL Format:
     // mysql://username:passwd@host:port/db?shard=value...
     //
     bool connectByURL(const std::string &url);
@@ -38,7 +38,7 @@ public:
 
 
     //
-    // URL Format:
+    // TinyURL Format:
     //  mysql://username:passwd@host:port/db?shard=value&idletime=xx&maxconn=xx...
     //  shard    - shard
     //  idletime - mysql will close the idle client
