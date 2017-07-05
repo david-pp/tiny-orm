@@ -1,39 +1,45 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<tinyobj>
-    <!--<import>tinyplayer.xml</import>-->
-    <!--<import>tinyplayer.xml</import>-->
-    <!--<import>tinyplayer.xml</import>-->
+#include <iostream>
+#include <vector>
+#include "tinylogger.h"
+#include "tinyplayer.h"
 
-    <Friend orm="0" keys="id" index="" comment="好友">
-        <id      num="1" type="uint32"  comment="标识符"/>
-        <name    num="2" type="vchar" size="32"  comment="名字"/>
-    </Friend>
+void upateTables()
+{
+    TinyMySqlORM orm;
+    orm.dropTableByName("PLAYER");
+    orm.updateTables();
+}
 
-    <Country orm="0" keys="id" index="" comment="国家">
-        <id      num="1" type="uint32"  comment="标识符"/>
-        <name    num="2" type="vchar" size="32"   comment="名字"/>
-    </Country>
+void test_1()
+{
+    tiny::Player p;
+    p.id = 1024;
+    p.country.name = "中国";
+    p.country.id = 2;
+    p.friends.resize(2);
+    p.friends[0].id = 1;
+    p.friends[0].name = "david";
+    p.friends[1].id = 2;
+    p.friends[1].name = "lica";
 
-    <Player keys="id" index="name" comment="角色信息">
-        <id      num="1" type="uint32"  comment="标识符"/>
-        <name    num="2" type="string"  default="david" comment="名字"/>
-        <country num="3" type="Country" comment="国家信息"/>
-        <friends num="4" type="std::vector{Friend}" comment="朋友列表"/>
-        <m_int8  num="10" type="int8" default="22"/>
-        <m_int16 num="11" type="int16"/>
-        <m_int32 num="12" type="int32"/>
-        <m_int64 num="13" type="int64"/>
-        <m_uint8  num="14" type="uint8"/>
-        <m_uint16 num="15" type="uint16"/>
-        <m_uint32 num="16" type="uint32"/>
-        <m_uint64 num="17" type="uint64"/>
-        <m_float  num="18" type="float"/>
-        <m_double num="19" type="double"/>
-        <m_bool   num="20" type="bool"/>
-        <m_string num="21" type="string"/>
-        <m_bytes  num="22" type="bytes"/>
-        <m_bytes_tiny  num="23" type="bytes_tiny"/>
-        <m_bytes_medium  num="24" type="bytes_medium"/>
-        <m_bytes_long  num="25" type="bytes_long"/>
-    </Player>
-</tinyobj>
+    TinyMySqlORM orm;
+    orm.insert(p);
+}
+
+void test_2()
+{
+    tiny::Player p;
+    p.id = 1024;
+
+    TinyMySqlORM mysql;
+    mysql.select(p);
+
+    std::cout << p.friends.size() << std::endl;
+}
+
+int main(int argc, const char *argv[]) {
+    MySqlConnectionPool::instance().connect("mysql://david:123456@127.0.0.1/tinyworld?maxconn=5");
+    upateTables();
+    test_1();
+    test_2();
+}
