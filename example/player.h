@@ -32,16 +32,6 @@ struct Weapon {
 //
 struct Player {
     //
-    // TableMeta约束
-    //
-    typedef uint32_t TableKey;
-
-    static const char *tableName() { return "player"; }
-
-    TableKey tableKey() const { return id; }
-    void tableKey(const TableKey& key) { id = key; }
-
-    //
     // Proto序列化约束
     //
     std::string serialize() const {
