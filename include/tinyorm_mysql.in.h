@@ -1,3 +1,23 @@
+// Copyright (c) 2017 david++
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
 #ifndef TINYWORLD_TINYORM_MYSQL_IN_H
 #define TINYWORLD_TINYORM_MYSQL_IN_H
 
@@ -378,6 +398,7 @@ TinyMySqlORM::vloadFromDB(const std::function<void(std::shared_ptr<T>)> &callbac
                     LOG_ERROR("TinyMySqlORM", "%s: recordToObject FAILED", __PRETTY_FUNCTION__);
                 }
             }
+            return true;
         }
     }
     catch (std::exception &err) {
@@ -700,6 +721,21 @@ inline bool TinyMySqlORM::recordToObject(mysqlpp::Row &record, T &obj, TableDesc
                               fd->name.c_str());
                     break;
                 }
+
+                if(record[i].is_null())
+                {
+                    ret = true;
+                    LOG_WARN("TinyMySqlORM", "%s.%s Property is NULL", td->table.c_str(), fd->name.c_str());
+                    break;
+                }
+
+                if(record[i].empty())
+                {
+                    ret = true;
+                    LOG_WARN("TinyMySqlORM", "%s.%s Property is empty", td->table.c_str(), fd->name.c_str());
+                    break;
+                }
+
                 if (!prop->deserialize(obj, std::string(record[i].data(), record[i].size()))) {
                     ret = false;
                     LOG_ERROR("TinyMySqlORM", "%s.%s Property deserialize failed", td->table.c_str(), fd->name.c_str());

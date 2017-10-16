@@ -16,4 +16,6 @@
 #include "tinyorm.h"
 #include "tinyorm_mysql.h"
 
+extern void initTinyObjectSystem();
+
 #endif //TINYWORLD_TINYOBJ_H

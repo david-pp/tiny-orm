@@ -1,3 +1,23 @@
+// Copyright (c) 2017 david++
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
 #ifndef TINYWORLD_TINYORM_H
 #define TINYWORLD_TINYORM_H
 
@@ -53,13 +73,13 @@ public:
 
     std::string sql_default();
 
-    // 字段名
+    // Field name
     std::string name;
-    // 字段类型
+    // Field type
     FieldType type;
-    // 默认值
+    // Default value
     std::string deflt;
-    // 字段大小(部分类型有效)
+    // Field size (some type is valid)
     uint32_t size;
 };
 
@@ -103,14 +123,15 @@ public:
     TableDescriptorBase(const std::string name)
             : table(name) {}
 
-    // 表名
+    // Talbe name
     std::string table;
-    // 主键字段
+    // Primary keys
     FieldDescriptorList keys_;
-    // 索引字段
+    // Indexes
     FieldDescriptorList indexs_;
-    // 字段描述
+    // Field Descriptors
     FieldDescriptorList fields_ordered_;
+    // Field Descriptors by name
     std::unordered_map<std::string, FieldDescriptor::Ptr> fields_;
 };
 
@@ -176,6 +197,17 @@ private:
 };
 
 
+//
+// Helper Class: Add datatabase operations to the object.
+// eg.
+//   Object2DB_T<Object, ORM> object;
+//   object.selectDB();
+//   object.updateDB();
+//
+// ORM :
+//   - TinyMySqlORM
+//   - TinySociORM
+//
 template<typename T, typename ORM>
 struct Object2DB_T : public T {
 public:
@@ -188,7 +220,7 @@ public:
     Object2DB_T(const T &object) : T(object) {}
 
     //
-    // 创建、删除、自动更新表结构
+    // Create, Drop and Update Table's Structure
     //
     static bool createTable(ORMPoolType *pool = &ORMPoolType::instance()) {
         ORM orm(pool);
@@ -223,7 +255,7 @@ public:
 
 public:
     //
-    // 该对象的数据库操作
+    // Database Operations
     //
     bool selectDB(ORMPoolType *pool = &ORMPoolType::instance()) {
         ORM orm(pool);

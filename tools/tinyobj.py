@@ -364,12 +364,27 @@ class FileDescription:
             desc.generateSerialize(0, outfile)
             desc.generateDeserialize(0, outfile)
         printline(outfile, 0, "} // namespace tiny")
+        print >> sys.stderr, '[INFO] ', filepath, 'is generated.'
 
+    def generateORM(self):
+        filepath = output_dir + '/' + self.filename + '.orm.h'
+        outfile = codecs.open(filepath, 'w+', "utf-8")
+        printline(outfile, 0, '#include "%s.h"' % self.filename)
         for desc in self.descriptors:
             if desc.need_orm:
                 desc.generateORM(0, outfile)
-
         print >> sys.stderr, '[INFO] ', filepath, 'is generated.'
+
+        include='#include "%s.orm.h"' % self.filename
+
+        tinyobj_filepath = output_dir + '/tinyobj.cpp'
+        tinobj_cpp = open(tinyobj_filepath).read()
+
+        if tinobj_cpp.find(include) == -1:
+            tinobj_file = codecs.open(tinyobj_filepath, 'w+')
+            print >> tinobj_file, tinobj_cpp
+            print >> tinobj_file, include
+            print >> sys.stderr, '[INFO] ', tinyobj_filepath, 'is updated.'
 
     def generateProto(self):
         filepath = output_dir + '/' + self.filename + '.proto'
@@ -439,6 +454,7 @@ def parse(filepath):
         fd.generateHeader()
         fd.generateProto()
         fd.generateSource()
+        fd.generateORM()
 
 #######################################################
 #
