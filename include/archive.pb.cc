@@ -188,7 +188,7 @@ void AddDescriptorsImpl() {
       "rs\030\001 \003(\0132\023.ArchiveMemberProto\"\"\n\022Archive"
       "MemberProto\022\014\n\004data\030\001 \001(\014\"\035\n\014IntegerProt"
       "o\022\r\n\005value\030\001 \001(\004\"\033\n\nFloatProto\022\r\n\005value\030"
-      "\001 \001(\001\"\034\n\013StringProto\022\r\n\005value\030\001 \001(\t\"4\n\rS"
+      "\001 \001(\001\"\034\n\013StringProto\022\r\n\005value\030\001 \001(\014\"4\n\rS"
       "equenceProto\022#\n\006values\030\001 \003(\0132\023.ArchiveMe"
       "mberProto\"\216\001\n\016AssociateProto\022)\n\006values\030\001"
       " \003(\0132\031.AssociateProto.ValueType\032Q\n\tValue"
@@ -1371,15 +1371,11 @@ bool StringProto::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional string value = 1;
+      // optional bytes value = 1;
       case 1: {
         if (tag == 10u) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_value()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-            this->value().data(), this->value().length(),
-            ::google::protobuf::internal::WireFormat::PARSE,
-            "StringProto.value");
         } else {
           goto handle_unusual;
         }
@@ -1411,13 +1407,9 @@ failure:
 void StringProto::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:StringProto)
-  // optional string value = 1;
+  // optional bytes value = 1;
   if (has_value()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->value().data(), this->value().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "StringProto.value");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
       1, this->value(), output);
   }
 
@@ -1432,14 +1424,10 @@ void StringProto::SerializeWithCachedSizes(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic;  // Unused
   // @@protoc_insertion_point(serialize_to_array_start:StringProto)
-  // optional string value = 1;
+  // optional bytes value = 1;
   if (has_value()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->value().data(), this->value().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "StringProto.value");
     target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         1, this->value(), target);
   }
 
@@ -1460,10 +1448,10 @@ size_t StringProto::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         unknown_fields());
   }
-  // optional string value = 1;
+  // optional bytes value = 1;
   if (has_value()) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::StringSize(
+      ::google::protobuf::internal::WireFormatLite::BytesSize(
         this->value());
   }
 
@@ -1536,7 +1524,7 @@ void StringProto::InternalSwap(StringProto* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // StringProto
 
-// optional string value = 1;
+// optional bytes value = 1;
 bool StringProto::has_value() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -1572,7 +1560,7 @@ void StringProto::set_value(const char* value) {
   value_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:StringProto.value)
 }
-void StringProto::set_value(const char* value, size_t size) {
+void StringProto::set_value(const void* value, size_t size) {
   set_has_value();
   value_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));

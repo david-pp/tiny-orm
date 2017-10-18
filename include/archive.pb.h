@@ -533,7 +533,7 @@ class StringProto : public ::google::protobuf::Message /* @@protoc_insertion_poi
 
   // accessors -------------------------------------------------------
 
-  // optional string value = 1;
+  // optional bytes value = 1;
   bool has_value() const;
   void clear_value();
   static const int kValueFieldNumber = 1;
@@ -543,7 +543,7 @@ class StringProto : public ::google::protobuf::Message /* @@protoc_insertion_poi
   void set_value(::std::string&& value);
   #endif
   void set_value(const char* value);
-  void set_value(const char* value, size_t size);
+  void set_value(const void* value, size_t size);
   ::std::string* mutable_value();
   ::std::string* release_value();
   void set_allocated_value(::std::string* value);
@@ -1030,7 +1030,7 @@ inline void FloatProto::set_value(double value) {
 
 // StringProto
 
-// optional string value = 1;
+// optional bytes value = 1;
 inline bool StringProto::has_value() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -1066,7 +1066,7 @@ inline void StringProto::set_value(const char* value) {
   value_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:StringProto.value)
 }
-inline void StringProto::set_value(const char* value, size_t size) {
+inline void StringProto::set_value(const void* value, size_t size) {
   set_has_value();
   value_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));

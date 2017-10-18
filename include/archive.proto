@@ -30,7 +30,7 @@ message FloatProto {
 // 字符串对应的数据格式
 //
 message StringProto {
-    optional string value = 1;
+    optional bytes value = 1;
 }
 
 

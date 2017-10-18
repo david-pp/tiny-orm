@@ -230,6 +230,7 @@ std::map{std::map{std::string, Player}}
 ## 参考
  
  - https://en.wikipedia.org/wiki/Object-relational_mapping
+ - http://www.agiledata.org/essays/mappingObjects.html
  - http://www.codesynthesis.com/products/odb/
  
  
