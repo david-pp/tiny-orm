@@ -158,7 +158,11 @@ class StructDescription:
 
     def parseFromXML(self, node):
         self.name = node.tag
-        self.dbname = self.name.upper()
+
+        if node.attrib.has_key('table'):
+            self.dbname = node.attrib['table']
+        else:
+            self.dbname = self.name.upper()
 
         if node.attrib.has_key('comment'):
             self.comment = node.attrib['comment']
